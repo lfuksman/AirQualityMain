@@ -21,17 +21,30 @@ def symbolLetter(a):
     return switcher.get(int(a),"")
 
 def Annotations(record, db):
-    r = loadmat(record+".mat") # temporary, need to switch to database
+    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary, need to switch to database
     if 'rec_info' in r:
         rec_info = r["rec_info"]
         return zip(convertNumpyArrayToList(rec_info["ecg_locs"]), convertNumpyArrayToList(rec_info["beat_type"]))
     return []
 
 def RecordInfo(record, db):
-    r = loadmat(record+".mat") # temporary
+    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
     if 'rec_info' in r:
         rec_info = r["rec_info"]
         return (convertNumpyArrayToList(rec_info["Fs"]), len(convertNumpyArrayToList(rec_info["denoised_ecg"]))) # freq, duration, signal_info?
+
+def RecordFreq(record, db):
+    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    if 'rec_info' in r:
+        rec_info = r["rec_info"]
+        return convertNumpyArrayToList(rec_info["Fs"])
+
+def RecordSample(record, db):
+    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    if 'rec_info' in r:
+        rec_info = r["rec_info"]
+        return convertNumpyArrayToList(rec_info["denoised_ecg"])
+
 
 tfreq, duration = RecordInfo("207", "")
 duration = duration/tfreq[0]
