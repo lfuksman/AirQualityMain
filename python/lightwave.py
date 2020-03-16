@@ -19,11 +19,6 @@ def index():
 def lightwaveclient():
     return render_template("lightwave/lightwave.html")
 
-# @app.route('/lightwave/<string:page_name>/')
-# def render_static(page_name):
-#     print(page_name)
-#     return render_template('%s' % page_name)
-
 @app.route('/lightwave/server')
 @cross_origin()
 def server():
@@ -36,7 +31,7 @@ def server():
             # return list of databases the user can see
 
             t["database"] = []
-            t["database"].append({"name":"mit-bit", "desc":"idk"})
+            t["database"].append({"name":"mit-bit", "desc":"static database with only one static file as record"})
             t["success"] = True
         else:
             if 'record' in query:
@@ -65,12 +60,6 @@ def server():
                         ta = {"name":annotator}
                         ta["annotation"] = []
                         # loop through beat info appending to annotation
-                        # t:
-                        # a:symbol
-                        # s: 0
-                        # c: 0
-                        # n: 0
-                        # x: null?
                         for time, symbolAnnotation in lightwave_io.Annotations(record, db):
                             # for time, symbolAnnotation in zip(x,y):
                                 ta["annotation"].append({"t":time, "a": lightwave_io.symbolLetter(symbolAnnotation), "s":0,"c":0,"n":0,"x":None})
