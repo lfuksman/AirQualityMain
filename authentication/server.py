@@ -1,17 +1,28 @@
 from functools import wraps
 import json
 from os import environ as env
+
+import dotenv
 from werkzeug.exceptions import HTTPException
 from dotenv import load_dotenv, find_dotenv
 from flask import Flask, jsonify, redirect, render_template, session, url_for
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
+import pyodbc
 
 app = Flask(__name__)
 AUTH0_AUDIENCE = 'https://dev-92zb026a.auth0.com/userinfo'
 app.secret_key = 'secret_key'
 JWT_PAYLOAD = 'jwt_payload'
 PROFILE_KEY = 'profile'
+conn_string = (
+    r'DRIVER={ODBC Driver 11 for SQL Server};'
+    r'SERVER=WIN-GHO929AITJN;'
+    r'DATABASE=Authentication;'
+    r'Trusted_Connection=yes;'
+)
+conn = pyodbc.connect(conn_string)
+cursor = conn.cursor()
 
 oauth = OAuth(app)
 
@@ -37,7 +48,7 @@ def home():
 @app.route('/callback')
 def callback_handling():
     # Handles response from token endpoint
-    print "redirected here"
+    print("redirected here")
     auth0.authorize_access_token()
     resp = auth0.get('userinfo')
     userinfo = resp.json()
@@ -49,14 +60,28 @@ def callback_handling():
         'name': userinfo['name'],
         'picture': userinfo['picture']
     }
-    return redirect('/dashboard')
+    username=userinfo['name']
+    print(username)
+    query = "SELECT UserRoleId FROM Users WHERE Username = ?"
+    cursor.execute(query, username)
+    userRole = cursor.fetchone()
+    print(userRole.UserRoleId)
+    if userRole.UserRoleId == 1:
+        return redirect('/adminDashboard')
+    else:
+        return redirect('/dashboard')
+
+
+@app.route('/adminDashboard')
+def adminDashboard():
+    return render_template('adminDashboard.html')
 
 
 @app.route('/login')
 def login():
-    print "Login"
+    print("Login")
     #return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback', audience=AUTH0_AUDIENCE)
-    return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback')
+    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
 
 
 def requires_auth(f):
