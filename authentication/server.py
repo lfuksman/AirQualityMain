@@ -74,7 +74,9 @@ def callback_handling():
 
 @app.route('/adminDashboard')
 def adminDashboard():
-    return render_template('adminDashboard.html')
+    cursor.execute('SELECT * FROM Users')
+    data = cursor.fetchall()
+    return render_template('adminDashboard.html', output_data=data)
 
 
 @app.route('/login')
