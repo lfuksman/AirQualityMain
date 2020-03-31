@@ -7,3 +7,6 @@ python-dotenv
 requests
 authlib
 six
+pyodbc
+Jinja2
+urllib3
