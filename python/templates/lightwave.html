@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends 'layout.html' %}
+{% block header %}
+{% block title %}LightWAVE [local]{% endblock %}
+{% endblock %}
+{% block head %}
 <meta http-equiv='content-type' content='text/html; charset=utf-8'>
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<title>LightWAVE [local]</title>
-<link rel="stylesheet" href="/static/lightwave/css/jquery-ui.min.css">
-<link rel="stylesheet" href="/static/lightwave/css/lightwave.css">
-<script src="/static/lightwave/js/jquery.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='lightwave/css/jquery-ui.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='lightwave/css/lightwave.css') }}">
+<!-- <script src="/static/lightwave/js/jquery.min.js"></script> -->
 <script src="/static/lightwave/js/jquery.cookie.js"></script>
 <script src="/static/lightwave/js/jquery-ui.min.js"></script>
 <script src="/static/lightwave/js/lightwave.js"></script>
 <noscript><style>.js { display: none; }</style></noscript>
-</head>
+{% endblock %}
 <!--
 LightWAVE main page	G. Moody	18 November 2012
 			Last revised:	  31 May 2013   version 0.63
@@ -32,6 +33,7 @@ code, which runs within the browser to provide low-latency interaction with the
 user).  The other .css and .js files are recent unmodified versions of standard
 jQuery and jQuery UI components.
 -->
+{% block content %}
 <body style='background-color:#fff'>
 
 <noscript>
@@ -364,9 +366,9 @@ signal window if selected below">&#x21b4;</button>
       <div id="edit_mode">
 	<input type="radio" id="no_edit" name="edit_mode" checked="checked">
 	  <label for="no_edit">View (no editing)</label>
-	<input type="radio" id="mouse_edit" name="edit_mode">
+	<input type="radio" id="mouse_edit" name="edit_mode" disabled>
 	  <label for="mouse_edit">Edit using mouse</label>
-	<input type="radio" id="touch_edit" name="edit_mode">
+	<input type="radio" id="touch_edit" name="edit_mode" disabled>
 	  <label for="touch_edit">Edit using touch</label>
       </div>
   </td></tr>
@@ -429,4 +431,7 @@ and links to more information">Main help</button>
 </div>  <!-- end of "js" div -->
 </div>  <!-- end of "top" div -->
 </body>
-</html>
+{% endblock %}
+{% block footer %}
+Powered by LightWAVE
+{% endblock %}

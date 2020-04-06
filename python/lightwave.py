@@ -17,7 +17,7 @@ def index():
 
 @app.route("/lightwave/")
 def lightwaveclient():
-    return render_template("lightwave/lightwave.html")
+    return render_template("lightwave.html")
 
 @app.route('/lightwave/server')
 @cross_origin()

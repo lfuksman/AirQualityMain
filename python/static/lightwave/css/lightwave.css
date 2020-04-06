@@ -23,10 +23,6 @@ div.notice { width: 90%; margin: auto; padding: 2em; background: #cdf; }
 }
 #tabs .ui-tabs-nav {
 	padding-left: 0px;
-	background: url('../images/animation.svg'),
-	  url('../images/lightwave.svg');
-	background-position: top right;
-	background-repeat: no-repeat;
 	border-width: 0px 0px 1px 0px;
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
