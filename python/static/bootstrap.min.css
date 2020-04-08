@@ -586,7 +586,7 @@ pre code {
     overflow-y: scroll
 }
 
-.container {
+.b_container {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -595,30 +595,30 @@ pre code {
 }
 
 @media (min-width:576px) {
-    .container {
+    .b_container {
         max-width: 540px
     }
 }
 
 @media (min-width:768px) {
-    .container {
+    .b_container {
         max-width: 720px
     }
 }
 
 @media (min-width:992px) {
-    .container {
+    .b_container {
         max-width: 960px
     }
 }
 
 @media (min-width:1200px) {
-    .container {
+    .b_container {
         max-width: 1140px
     }
 }
 
-.container-fluid {
+.b_container-fluid {
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
@@ -4162,8 +4162,8 @@ tbody.collapse.show {
     padding: .5rem 1rem
 }
 
-.navbar>.container,
-.navbar>.container-fluid {
+.navbar>.b_container,
+.navbar>.b_container-fluid {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -4261,8 +4261,8 @@ tbody.collapse.show {
 }
 
 @media (max-width:575.98px) {
-    .navbar-expand-sm>.container,
-    .navbar-expand-sm>.container-fluid {
+    .navbar-expand-sm>.b_container,
+    .navbar-expand-sm>.b_container-fluid {
         padding-right: 0;
         padding-left: 0
     }
@@ -4295,8 +4295,8 @@ tbody.collapse.show {
         padding-right: .5rem;
         padding-left: .5rem
     }
-    .navbar-expand-sm>.container,
-    .navbar-expand-sm>.container-fluid {
+    .navbar-expand-sm>.b_container,
+    .navbar-expand-sm>.b_container-fluid {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap
     }
@@ -4317,8 +4317,8 @@ tbody.collapse.show {
 }
 
 @media (max-width:767.98px) {
-    .navbar-expand-md>.container,
-    .navbar-expand-md>.container-fluid {
+    .navbar-expand-md>.b_container,
+    .navbar-expand-md>.b_container-fluid {
         padding-right: 0;
         padding-left: 0
     }
@@ -4351,8 +4351,8 @@ tbody.collapse.show {
         padding-right: .5rem;
         padding-left: .5rem
     }
-    .navbar-expand-md>.container,
-    .navbar-expand-md>.container-fluid {
+    .navbar-expand-md>.b_container,
+    .navbar-expand-md>.b_container-fluid {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap
     }
@@ -4373,8 +4373,8 @@ tbody.collapse.show {
 }
 
 @media (max-width:991.98px) {
-    .navbar-expand-lg>.container,
-    .navbar-expand-lg>.container-fluid {
+    .navbar-expand-lg>.b_container,
+    .navbar-expand-lg>.b_container-fluid {
         padding-right: 0;
         padding-left: 0
     }
@@ -4407,8 +4407,8 @@ tbody.collapse.show {
         padding-right: .5rem;
         padding-left: .5rem
     }
-    .navbar-expand-lg>.container,
-    .navbar-expand-lg>.container-fluid {
+    .navbar-expand-lg>.b_container,
+    .navbar-expand-lg>.b_container-fluid {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap
     }
@@ -4429,8 +4429,8 @@ tbody.collapse.show {
 }
 
 @media (max-width:1199.98px) {
-    .navbar-expand-xl>.container,
-    .navbar-expand-xl>.container-fluid {
+    .navbar-expand-xl>.b_container,
+    .navbar-expand-xl>.b_container-fluid {
         padding-right: 0;
         padding-left: 0
     }
@@ -4463,8 +4463,8 @@ tbody.collapse.show {
         padding-right: .5rem;
         padding-left: .5rem
     }
-    .navbar-expand-xl>.container,
-    .navbar-expand-xl>.container-fluid {
+    .navbar-expand-xl>.b_container,
+    .navbar-expand-xl>.b_container-fluid {
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap
     }
@@ -4494,8 +4494,8 @@ tbody.collapse.show {
     justify-content: flex-start
 }
 
-.navbar-expand>.container,
-.navbar-expand>.container-fluid {
+.navbar-expand>.b_container,
+.navbar-expand>.b_container-fluid {
     padding-right: 0;
     padding-left: 0
 }
@@ -4521,8 +4521,8 @@ tbody.collapse.show {
     padding-left: .5rem
 }
 
-.navbar-expand>.container,
-.navbar-expand>.container-fluid {
+.navbar-expand>.b_container,
+.navbar-expand>.b_container-fluid {
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap
 }
@@ -9248,7 +9248,7 @@ a.text-dark:hover {
     body {
         min-width: 992px!important
     }
-    .container {
+    .b_container {
         min-width: 992px!important
     }
     .navbar {
