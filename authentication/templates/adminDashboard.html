@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "layout.html" %} {% block title %}Title{% endblock %}{% block head %}{{ super() }}
     <meta charset="UTF-8">
-    <title>Title</title>
     <script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
-</head>
+{% endblock %} {% block content %}
 <body>
     <h1>Welcome. This is admin dashboard. </h1>
 
@@ -28,4 +25,4 @@
 </table>
     <p>Click <a href="/lightwave">here</a> to go LightWave.</p>
 </body>
-</html>
+{% endblock %}
