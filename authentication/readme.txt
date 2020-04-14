@@ -10,3 +10,5 @@ six
 pyodbc
 Jinja2
 urllib3
+flask_table
+wtforms
