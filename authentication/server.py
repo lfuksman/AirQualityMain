@@ -107,7 +107,15 @@ def edit(Username):
     form = EditableForm(request.form)
     form.Username.data=Username
     return render_template('editableForm.html', form=form)
-    #TO DO: add funcitonality on sumbit: click save --> update database, tell that it was updated, return to the list of users
+
+
+@app.route('/updateInfo', methods=['GET', 'POST'])
+def updateInfo():
+    print ("going to update databse")
+    Username = request.form.get("Username")
+    UserRoleId= request.form.get("UserRoleId")
+    cursor.execute('UPDATE Users SET UserRoleId =? WHERE Username =?', (UserRoleId, Username))
+    return redirect('/adminDashboard')
 
 
 @app.route('/login')
