@@ -1,0 +1,17 @@
+{% extends "layout.html" %} {% block title %}Title{% endblock %}{% block head %}{{ super() }}
+    <meta charset="UTF-8">
+    <script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
+{% endblock %} {% block content %}
+<doctype html="">
+<title>Edit user information</title>
+<p>Click "Save" after editing this user's information: </p>
+{% from "_formhelpers.html" import render_field %}
+<form method="post">
+    <dl>
+        {{ render_field(form.Username) }}
+        {{ render_field(form.UserRoleId) }}
+    </dl>
+    <p><input type="submit" value="Save">
+</p></form>
+</doctype>
+{% endblock %}
