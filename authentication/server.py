@@ -9,9 +9,12 @@ from flask import Flask, jsonify, redirect, render_template, session, url_for, r
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 import pyodbc
+from flask_table import Table, Col, LinkCol
+from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, SelectField
 from flask_cors import cross_origin
 
 import lightwave_io
+
 
 app = Flask(__name__)
 AUTH0_AUDIENCE = 'https://dev-92zb026a.auth0.com/userinfo'
@@ -78,8 +81,33 @@ def callback_handling():
 @app.route('/adminDashboard')
 def adminDashboard():
     cursor.execute('SELECT * FROM Users')
-    data = cursor.fetchall()
-    return render_template('adminDashboard.html', output_data=data)
+    columns = [column[0] for column in cursor.description]
+    results = []
+    for row in cursor.fetchall():
+        results.append(dict(zip(columns, row)))
+    table = Results(results)
+    table.border = True
+    return render_template('adminDashboard.html', table=table)
+
+
+class Results(Table):
+    Username = Col('Username')
+    UserRoleId = Col('UserRoleId')
+    edit = LinkCol('Edit', 'edit', url_kwargs=dict(Username= 'Username'))
+
+
+class EditableForm(Form):
+    roles_options = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]
+    Username = StringField('Username')
+    UserRoleId = SelectField('UserRoleId', choices=roles_options)
+
+
+@app.route('/edit/<string:Username>', methods=['GET', 'POST'])
+def edit(Username):
+    form = EditableForm(request.form)
+    form.Username.data=Username
+    return render_template('editableForm.html', form=form)
+    #TO DO: add funcitonality on sumbit: click save --> update database, tell that it was updated, return to the list of users
 
 
 @app.route('/login')
@@ -114,6 +142,7 @@ def logout():
     # Redirect user to logout endpoint
     params = {'returnTo': url_for('home', _external=True), 'client_id': '90ycfYTmNMgEpY7x4a2fquPoW5iB0N77'}
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params))
+
 
 @app.route("/lightwave/")
 def lightwaveclient():
