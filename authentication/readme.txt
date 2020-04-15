@@ -12,3 +12,4 @@ Jinja2
 urllib3
 flask_table
 wtforms
+flask_cors
