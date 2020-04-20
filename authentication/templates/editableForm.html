@@ -1,18 +1,31 @@
-{% extends "layout.html" %} {% block title %}Title{% endblock %}{% block head %}{{ super() }}
-    <meta charset="UTF-8">
-    <script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
-    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+{% extends "layout.html" %} {% block title %}Edit user information{% endblock %}{% block head %}{{ super() }}
+<meta charset="UTF-8">
+<script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
 {% endblock %} {% block content %}
-<doctype html="">
-<title>Edit user information</title>
-<p>Click "Save" after editing this user's information: </p>
-{% from "_formhelpers.html" import render_field %}
-<form action="/updateInfo" method="post">
-    <dl>
-        {{ render_field(form.Username) }}
-        {{ render_field(form.UserRoleId) }}
-    </dl>
-    <p><input type="submit" id="save" value="Save"></p>
-</form>
-</doctype>
+<main role="edit">
+    <section class="text-center" style="padding-top: 10px; padding-left: 2rem; padding-right: 2rem;">
+        <div style="float: left;">
+            <h1>
+                <font size="6">Edit User Information</font>
+        </div>
+        <div style="float: right; padding: .75rem;">
+            <a href="/adminDashboard" style="margin: 10px;">Back</a>
+        </div>
+        <div style="margin: auto; max-width: 40rem; padding-top: 100px;">
+            <doctype html="">
+                <p style="text-align: left;">Click "Save" after editing this user's information: </p>
+                {% from "_formhelpers.html" import render_field %}
+                <form action="/updateInfo" method="post">
+                    <dl>
+                        {{ render_field(form.Username) }} {{ render_field(form.UserRoleId) }}
+                    </dl>
+                    <p style="margin-top: 45px;">
+                        <input class="btn btn-primary btn-lg btn-login btn-block" type="submit" id="save" value="Save" style="width:auto; display:inline-block">
+                    </p>
+                </form>
+            </doctype>
+        </div>
+    </section>
+</main>
 {% endblock %}
