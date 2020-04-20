@@ -1,13 +1,26 @@
-{% extends "layout.html" %} {% block title %}Title{% endblock %}{% block head %}{{ super() }}
-    <meta charset="UTF-8">
-    <script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
-    <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
-{% endblock %} {% block content %}
-<body>
-<title>Admin dashboard</title>
-    <h1>Welcome. This is admin dashboard. </h1>
-    <p>Below is list of all registered users. You may click "Edit" next to any user whose information you would like to change.</p>
-{{ table }}
-    <p>Click <a href="/lightwave">here</a> to go LightWave.</p>
-</body>
+{% extends "layout.html" %} {% block title %}Admin Dashboard{% endblock %}{% block head %}{{ super() }}
+<meta charset="UTF-8">
+<script src="https://cdn.auth0.com/js/lock/11.22.4/lock.min.js"></script>
+<script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+<!-- Custom styles for this template -->
+<link href="static/dashboard/css/dashboard.css" rel="stylesheet"> {% endblock %} {% block content %}
+<main role="admin">
+    <section class="jumbotron text-center" style="padding-top: 10px;">
+        <div class='left'>
+            <h1 class="jumbotron-heading">
+                <font size="6">Admin dashboard</font>
+            </h1>
+        </div>
+        <div class='right'>
+            <a href="/lightwave" style="margin: 10px;">LightWave</a>
+            <a href="/logout" style="margin: 10px;"> Log Out</a>
+        </div>
+        <div class="container" style="padding-top: 100px;">
+            <!--<p>Below is list of all registered users. You may click "Edit" next to any user whose information you would like to change.</p> -->
+            <p style="text-align: left">Manage Registered Users:</p>
+            {{ table }}
+        </div>
+        <!--<p>Click <a href="/lightwave">here</a> to go LightWave.</p>-->
+    </section>
+</main>
 {% endblock %}
