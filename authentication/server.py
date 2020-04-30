@@ -22,8 +22,8 @@ app.secret_key = 'secret_key'
 JWT_PAYLOAD = 'jwt_payload'
 PROFILE_KEY = 'profile'
 conn_string = (
-    r'DRIVER={ODBC Driver 11 for SQL Server};'
-    r'SERVER=WIN-GHO929AITJN;'
+    r'DRIVER={ODBC Driver 11 for SQL Server};' # Change the value based on local machine
+    r'SERVER=WIN-GHO929AITJN;' # Change the value based on local machine
     r'DATABASE=Authentication;'
     r'Trusted_Connection=yes;'
 )
@@ -32,7 +32,7 @@ cursor = conn.cursor()
 
 oauth = OAuth(app)
 
-auth0 = oauth.register(
+auth0 = oauth.register( # Connection to Auth0 api
     'auth0',
     client_id='90ycfYTmNMgEpY7x4a2fquPoW5iB0N77',
     client_secret='RE-7Yz3KMufnrtZIQIHNYzPTfp8V_U2CSHuwkqK7mDinYZ5LW4CcCuQkCP64GvF6',
@@ -50,11 +50,10 @@ def home():
     return render_template('homeScreen.html')
 
 
-# Here we're using the /callback route.
+# Callback route
 @app.route('/callback')
 def callback_handling():
     # Handles response from token endpoint
-    print("redirected here")
     auth0.authorize_access_token()
     resp = auth0.get('userinfo')
     userinfo = resp.json()
@@ -67,12 +66,11 @@ def callback_handling():
         'picture': userinfo['picture']
     }
     username=userinfo['name']
-    print(username)
+   
     query = "SELECT UserRoleId FROM Users WHERE Username = ?"
     cursor.execute(query, username)
     userRole = cursor.fetchone()
-    print(userRole.UserRoleId)
-    if userRole.UserRoleId == 1:
+    if userRole.UserRoleId == 1: # Redirect to correct screen based on associated user role
         return redirect('/adminDashboard')
     else:
         return redirect('/dashboard')
@@ -80,7 +78,7 @@ def callback_handling():
 
 @app.route('/adminDashboard')
 def adminDashboard():
-    cursor.execute('SELECT * FROM Users')
+    cursor.execute('SELECT * FROM Users') # Get a list of all users
     columns = [column[0] for column in cursor.description]
     results = []
     for row in cursor.fetchall():
@@ -90,28 +88,27 @@ def adminDashboard():
     return render_template('adminDashboard.html', table=table)
 
 
-class Results(Table):
+class Results(Table): # Table of all users
     Username = Col('Username')
     UserRoleId = Col('UserRoleId')
     edit = LinkCol('Edit', 'edit', url_kwargs=dict(Username= 'Username'))
 
 
-class EditableForm(Form):
+class EditableForm(Form): # Form to allow admin to edit user roles
     roles_options = [('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')]
     Username = StringField('Username')
     UserRoleId = SelectField('UserRoleId', choices=roles_options)
 
 
-@app.route('/edit/<string:Username>', methods=['GET', 'POST'])
+@app.route('/edit/<string:Username>', methods=['GET', 'POST']) # Renders the editable form
 def edit(Username):
     form = EditableForm(request.form)
     form.Username.data=Username
-    return render_template('editableForm.html', form=form)
+    return render_template('editableForm.html', form=form) 
 
 
 @app.route('/updateInfo', methods=['GET', 'POST'])
-def updateInfo():
-    print ("going to update databse")
+def updateInfo(): # Update user information in database
     Username = request.form.get("Username")
     UserRoleId= request.form.get("UserRoleId")
     cursor.execute('UPDATE Users SET UserRoleId =? WHERE Username =?', (UserRoleId, Username))
@@ -119,10 +116,8 @@ def updateInfo():
 
 
 @app.route('/login')
-def login():
-    print("Login")
-    #return auth0.authorize_redirect(redirect_uri='http://localhost:3000/callback', audience=AUTH0_AUDIENCE)
-    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback')
+def login(): # Login page
+    return auth0.authorize_redirect(redirect_uri='http://localhost:5000/callback') 
 
 
 def requires_auth(f):
@@ -137,7 +132,7 @@ def requires_auth(f):
 
 @app.route('/dashboard')
 @requires_auth
-def dashboard():
+def dashboard(): # User dashboard
     return render_template('dashboard.html',
                            userinfo=session['profile'],
                            userinfo_pretty=json.dumps(session['jwt_payload'], indent=4))
@@ -153,7 +148,7 @@ def logout():
 
 
 @app.route("/lightwave/")
-def lightwaveclient():
+def lightwaveclient(): #Redirect to lightwave
     return render_template("lightwave.html")
 
 @app.route('/lightwave/server')
