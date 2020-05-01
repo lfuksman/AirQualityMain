@@ -1,4 +1,4 @@
-# Auth0 authentication
+Auth0 authentication
 
 
 Make sure to install using pip install the following:
