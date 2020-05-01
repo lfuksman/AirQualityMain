@@ -1,4 +1,4 @@
-# AirQualityMain
+# ECG sensor to monitor arrythmia
 
 
 To run the lighwave flask application:
