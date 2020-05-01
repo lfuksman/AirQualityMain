@@ -17,7 +17,7 @@ import lightwave_io
 
 
 app = Flask(__name__)
-AUTH0_AUDIENCE = 'https://dev-92zb026a.auth0.com/userinfo'
+AUTH0_AUDIENCE = 'https://dev-92zb026a.auth0.com/userinfo' # Configure based on the domain of Auth0 web application
 app.secret_key = 'secret_key'
 JWT_PAYLOAD = 'jwt_payload'
 PROFILE_KEY = 'profile'
@@ -32,7 +32,7 @@ cursor = conn.cursor()
 
 oauth = OAuth(app)
 
-auth0 = oauth.register( # Connection to Auth0 api
+auth0 = oauth.register( # Connection to Auth0 api, configure to match the values in Auth0 web application
     'auth0',
     client_id='90ycfYTmNMgEpY7x4a2fquPoW5iB0N77',
     client_secret='RE-7Yz3KMufnrtZIQIHNYzPTfp8V_U2CSHuwkqK7mDinYZ5LW4CcCuQkCP64GvF6',
