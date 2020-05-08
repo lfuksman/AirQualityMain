@@ -620,8 +620,8 @@ function rlist() {
 	    rlist_text = '<select name=\"record\">\n'
 		+ '<option value=\"\" selected>--Choose one--</option>\n';
 	    for (i = 0; i < data.record.length; i++) {
-	        rlist_text += '<option value=\"' + data.record[i]
-		    + '\">' + data.record[i] + '</option>\n';
+	        rlist_text += '<option value=\"' + data.record[i][0]
+		    + '\">' + data.record[i][1] + '</option>\n';
 	    }
 	    rlist_text += '</select>';
 	}

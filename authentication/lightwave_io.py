@@ -1,4 +1,6 @@
 from scipy.io import loadmat
+import pickle
+import server
 
 def convertNumpyArrayToList(np):
     t = []
@@ -21,37 +23,54 @@ def symbolLetter(a):
     return switcher.get(int(a),"")
 
 def Annotations(record, db):
-    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary, need to switch to database
+    #this is where we get the pickle object record to pass     
+    #this is where we would load the pickled object...
+    #r = loadmat("../sampleRecMitdb"+record+".mat") # temporary, need to switch to database
+    #r = loadmat("../sampleRecMitdb207.mat")
+    r = pickle.loads(getRecord(record))  
     if 'rec_info' in r:
-        rec_info = r["rec_info"]
+        rec_info = r["rec_info"] # this is the python object we want to store in the database via pickle
         return zip(convertNumpyArrayToList(rec_info["ecg_locs"]), convertNumpyArrayToList(rec_info["beat_type"]))
     return []
 
 def RecordInfo(record, db):
-    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb207.mat")
+    r = pickle.loads(getRecord(record))
     if 'rec_info' in r:
         rec_info = r["rec_info"]
         return (convertNumpyArrayToList(rec_info["Fs"]), len(convertNumpyArrayToList(rec_info["denoised_ecg"]))) # freq, duration, signal_info?
 
 def RecordFreq(record, db):
-    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb207.mat")
+    r = pickle.loads(getRecord(record))
     if 'rec_info' in r:
         rec_info = r["rec_info"]
         return convertNumpyArrayToList(rec_info["Fs"])
 
 def RecordSample(record, db):
-    r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb"+record+".mat") # temporary
+    #r = loadmat("../sampleRecMitdb207.mat")
+    r = pickle.loads(getRecord(record))
     if 'rec_info' in r:
         rec_info = r["rec_info"]
         return convertNumpyArrayToList(rec_info["denoised_ecg"])
 
+def getRecord(record):
+    query = "SELECT RecordString FROM Records WHERE RecordId = ?"
+    server.cursor.execute(query, record)
+    pickle_obj = server.cursor.fetchval()
+    return pickle_obj
 
-tfreq, duration = RecordInfo("207", "")
-duration = duration/tfreq[0]
-dmin = int(duration/60)
-dsec = int(duration - dmin*60)
-dmsec = round((duration - dmin*60 - dsec)*1000)
-print("%d:%02d.%d" % (dmin, dsec, dmsec))
+
+
+#tfreq, duration = RecordInfo("207", "")
+#duration = duration/tfreq[0]
+#dmin = int(duration/60)
+#dsec = int(duration - dmin*60)
+#dmsec = round((duration - dmin*60 - dsec)*1000)
+#print("%d:%02d.%d" % (dmin, dsec, dmsec))
 
 # print(Annotations("207", ""))
 # print(RecordInfo("207", ""))
